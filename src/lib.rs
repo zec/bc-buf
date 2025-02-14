@@ -536,7 +536,7 @@ impl<'a, T: CBufItem, const SIZE: usize> CBufReader<'a, T, SIZE> {
     /// (c.f. [`fetch_next_item`](Self::fetch_next_item)
     /// and [`available_items_iter`](Self::available_items_iter)).
     #[inline]
-    pub fn reader_stating_at(&self, next: CBufIndex<SIZE>) -> Self {
+    pub fn reader_starting_at(&self, next: CBufIndex<SIZE>) -> Self {
         let mut result = self.clone();
         result.next_local = next;
         result
@@ -568,7 +568,7 @@ impl<'a, T: CBufItem, const SIZE: usize> CBufReader<'a, T, SIZE> {
         match self.fetch_with_index(ifalse) {
             FetchWithIndexResult::Success(v, idx) | FetchWithIndexResult::Skipped(v, idx) => {
                 if predicate(v) {
-                    return Ok(self.reader_stating_at(idx));
+                    return Ok(self.reader_starting_at(idx));
                 }
                 ifalse = idx
             }
@@ -611,7 +611,7 @@ impl<'a, T: CBufItem, const SIZE: usize> CBufReader<'a, T, SIZE> {
                 }
             }
         }
-        return Ok(self.reader_stating_at(itrue));
+        return Ok(self.reader_starting_at(itrue));
     }
 
     /// Returns the half-open range of valid indexes for items currently in the circular buffer.

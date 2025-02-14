@@ -184,7 +184,7 @@ fn write_wrap_read_search() {
 
     // Search for value no earlier than a read index
     let idx_partway = ivalids.start + 10;
-    let partreader = reader.reader_stating_at(idx_partway);
+    let partreader = reader.reader_starting_at(idx_partway);
     for i in ivalids.start.as_usize() - 1..ivalids.end.as_usize() + 1 {
         let predicate = |x| x >= i as u16;
         match partreader.search(&predicate, false) {
